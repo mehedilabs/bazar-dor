@@ -7,6 +7,22 @@ export function toEnglishNumber(value: string | number) {
   });
 }
 
+export function toBanglaNumber(value: string | number) {
+  const englishDigits = "0123456789";
+  const banglaDigits = "০১২৩৪৫৬৭৮৯";
+
+  return String(value).replace(/[0-9]/g, (digit) => {
+    return banglaDigits[englishDigits.indexOf(digit)];
+  });
+}
+
+export function formatDecimalPrice(value: number) {
+  const formatted = value.toFixed(2).replace(/\.00$/, "");
+
+  return toBanglaNumber(formatted);
+}
+
+
 export function toNumber(value: string | number | undefined) {
   if (value === undefined) {
     return 0;
