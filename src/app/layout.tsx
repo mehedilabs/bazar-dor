@@ -6,6 +6,7 @@ import PriceTicker from "@/components/layout/PriceTicker";
 import { getCategories, getProducts } from "@/lib/api";
 
 import { Noto_Serif_Bengali } from "next/font/google";
+import Footer from "@/components/layout/Footer";
 
 const NotoSerifBengali = Noto_Serif_Bengali({
   subsets: ["latin", "bengali"],
@@ -36,6 +37,8 @@ export default async function RootLayout({
         <CategoryNav categories={categories} />
         <PriceTicker products={products} />
         {children}
+
+        <Footer />
       </body>
     </html>
   );
