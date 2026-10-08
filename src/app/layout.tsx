@@ -5,6 +5,12 @@ import CategoryNav from "@/components/layout/CategoryNav";
 import PriceTicker from "@/components/layout/PriceTicker";
 import { getCategories, getProducts } from "@/lib/api";
 
+import { Noto_Serif_Bengali } from "next/font/google";
+
+const NotoSerifBengali = Noto_Serif_Bengali({
+  subsets: ["latin", "bengali"],
+});
+
 export const metadata: Metadata = {
   title: "বাজার দর | Bazar Dor",
   description: "চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার বাজার দর এক নজরে।",
@@ -21,7 +27,10 @@ export default async function RootLayout({
   ]);
 
   return (
-    <html lang="bn">
+    <html
+      lang="bn"
+      className={`${NotoSerifBengali.className} h-full antialiased `}
+    >
       <body>
         <Header />
         <CategoryNav categories={categories} />
