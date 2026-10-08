@@ -1,28 +1,42 @@
 "use client";
+
+import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
-
+import { FiEye, FiEyeOff } from "react-icons/fi";
 const SignUp = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
+
     const user = Object.fromEntries(formData.entries()) as {
       name: string;
       email: string;
       password: string;
+      confirmPassword: string;
     };
 
+    if (user.password !== user.confirmPassword) {
+      toast.error("পাসওয়ার্ড দুটি একই নয়");
+      return;
+    }
+
     const { data, error } = await authClient.signUp.email({
-      ...user,
+      name: user.name,
+      email: user.email,
+      password: user.password,
       callbackURL: "/",
     });
 
     if (error) {
       if (error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL") {
-        toast.error("এই ইমেইল দিয়ে ইতোমধ্যে অ্যাকাউন্ট তৈরি করা হয়েছে");
+        toast.error("এই ইমেইলে অ্যাকাউন্ট আছে");
       }
 
       return;
@@ -32,7 +46,6 @@ const SignUp = () => {
       redirect("/");
     }
   };
-
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 py-10">
       <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -73,14 +86,56 @@ const SignUp = () => {
             <label className="mb-1 block text-sm font-medium text-gray-700">
               পাসওয়ার্ড
             </label>
-            <input
-              name="password"
-              type="password"
-              placeholder="আপনার পাসওয়ার্ড"
-              className="input w-full border-gray-300 bg-white"
-            />
-          </div>
 
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="আপনার পাসওয়ার্ড"
+                className="input w-full border-gray-300 bg-white pr-10"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-green-700"
+                aria-label={
+                  showPassword ? "পাসওয়ার্ড লুকান" : "পাসওয়ার্ড দেখুন"
+                }
+              >
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+              </button>
+            </div>
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              পাসওয়ার্ড নিশ্চিত করুন
+            </label>
+
+            <div className="relative">
+              <input
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="পাসওয়ার্ড আবার লিখুন"
+                className="input w-full border-gray-300 bg-white pr-10"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-green-700"
+                aria-label={
+                  showConfirmPassword ? "পাসওয়ার্ড লুকান" : "পাসওয়ার্ড দেখুন"
+                }
+              >
+                {showConfirmPassword ? (
+                  <FiEyeOff size={18} />
+                ) : (
+                  <FiEye size={18} />
+                )}
+              </button>
+            </div>
+          </div>
           <button
             type="submit"
             className="btn w-full border-0 bg-green-800 text-white hover:bg-green-700"

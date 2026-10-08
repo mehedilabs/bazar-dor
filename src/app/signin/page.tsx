@@ -1,10 +1,14 @@
 "use client";
-import React from "react";
+
+import React, { useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const SignIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
     e.preventDefault();
 
@@ -23,6 +27,8 @@ const SignIn = () => {
       if (error.code === "INVALID_EMAIL_OR_PASSWORD") {
         toast.error("ইমেইল অথবা পাসওয়ার্ড ভুল হয়েছে");
       }
+
+      return;
     }
 
     if (data) {
@@ -47,6 +53,7 @@ const SignIn = () => {
             <label className="mb-1 block text-sm font-medium text-gray-700">
               ইমেইল
             </label>
+
             <input
               type="email"
               name="email"
@@ -59,12 +66,26 @@ const SignIn = () => {
             <label className="mb-1 block text-sm font-medium text-gray-700">
               পাসওয়ার্ড
             </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="আপনার পাসওয়ার্ড"
-              className="input w-full border-gray-300 bg-white"
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="আপনার পাসওয়ার্ড"
+                className="input w-full border-gray-300 bg-white pr-10"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-green-700"
+                aria-label={
+                  showPassword ? "পাসওয়ার্ড লুকান" : "পাসওয়ার্ড দেখুন"
+                }
+              >
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+              </button>
+            </div>
           </div>
 
           <button
