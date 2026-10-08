@@ -7,6 +7,7 @@ import { getCategories, getProducts } from "@/lib/api";
 
 import { Noto_Serif_Bengali } from "next/font/google";
 import Footer from "@/components/layout/Footer";
+import ToastProvider from "@/components/providers/ToastProvider";
 
 const NotoSerifBengali = Noto_Serif_Bengali({
   subsets: ["latin", "bengali"],
@@ -39,6 +40,7 @@ export default async function RootLayout({
         {children}
 
         <Footer />
+        <ToastProvider />
       </body>
     </html>
   );
