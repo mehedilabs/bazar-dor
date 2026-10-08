@@ -3,7 +3,7 @@
 @plugin "daisyui";
 
 :root {
-  --background: #f8fafc;
+  --background: #F0F5F0;
   --foreground: #0f172a;
 }
 
@@ -31,3 +31,5 @@ a {
   background: #16a34a;
   color: white;
 }
+
+
