@@ -1,5 +1,6 @@
 import type { Product } from "@/types/product";
 import ProductCard from "@/components/product/ProductCard";
+import { formatPrice, toBanglaNumber } from "@/lib/utils";
 
 interface ProductSectionsProps {
   products: Product[];
@@ -60,7 +61,8 @@ const ProductSections = ({ products }: ProductSectionsProps) => {
           </h2>
 
           <p className="mt-2 text-slate-500">
-            মোট {products.length}টি পণ্যের আজকের দাম দেখানো হচ্ছে।
+            মোট {toBanglaNumber(products.length)}টি পণ্যের আজকের দাম দেখানো
+            হচ্ছে।
           </p>
         </div>
 

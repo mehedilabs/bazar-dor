@@ -191,33 +191,33 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         </section>
 
         {/* Market Prices */}
-        <section className="mt-7 rounded-[22px] border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+        <section className="mt-7 rounded-[22px] border border-slate-200 bg-white p-4 shadow-sm sm:p-7">
           <h2 className="text-lg font-bold text-slate-900">
             বাজারভিত্তিক আজকের দাম
           </h2>
 
           {marketPrices.length > 0 ? (
-            <div className="mt-5 overflow-x-auto">
-              <table className="w-full min-w-[700px] border-collapse text-sm">
+            <div className="mt-5">
+              <table className="w-full table-fixed border-collapse text-[10px] sm:text-sm">
                 <thead>
                   <tr className="border-b border-slate-300 text-left">
-                    <th className="px-4 py-4 font-bold text-slate-700">
+                    <th className="w-[24%] px-1.5 py-3 font-bold text-slate-700 sm:px-4 sm:py-4">
                       বাজার
                     </th>
 
-                    <th className="px-4 py-4 font-bold text-slate-700">
+                    <th className="w-[18%] px-1.5 py-3 font-bold text-slate-700 sm:px-4 sm:py-4">
                       বিভাগ
                     </th>
 
-                    <th className="px-4 py-4 text-right font-bold text-slate-700">
+                    <th className="w-[19%] px-1 py-3 text-right font-bold text-slate-700 sm:px-4 sm:py-4">
                       সর্বনিম্ন
                     </th>
 
-                    <th className="px-4 py-4 text-right font-bold text-slate-700">
+                    <th className="w-[19%] px-1 py-3 text-right font-bold text-slate-700 sm:px-4 sm:py-4">
                       সর্বাধিক
                     </th>
 
-                    <th className="px-4 py-4 text-right font-bold text-slate-700">
+                    <th className="w-[20%] px-1 py-3 text-right font-bold text-slate-700 sm:px-4 sm:py-4">
                       গড়
                     </th>
                   </tr>
@@ -234,24 +234,30 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                           index % 2 === 1 ? "bg-[#f3f7f2]" : "bg-white"
                         }`}
                       >
-                        <td className="px-4 py-4 font-semibold text-slate-700">
+                        <td className="break-words px-1.5 py-3 font-semibold text-slate-700 sm:px-4 sm:py-4">
                           {market.market}
                         </td>
 
-                        <td className="px-4 py-4 text-slate-600">
+                        <td className="break-words px-1.5 py-3 text-slate-600 sm:px-4 sm:py-4">
                           {market.division}
                         </td>
 
-                        <td className="px-4 py-4 text-right font-medium text-slate-700">
+                        <td className="px-1 py-3 text-right font-medium text-slate-700 sm:px-4 sm:py-4">
                           {formatPrice(market.min)} টাকা
                         </td>
 
-                        <td className="px-4 py-4 text-right font-medium text-slate-700">
+                        <td className="px-1 py-3 text-right font-medium text-slate-700 sm:px-4 sm:py-4">
                           {formatPrice(market.max)} টাকা
                         </td>
 
-                        <td className="px-4 py-4 text-right font-bold text-slate-800">
-                          {formatDecimalPrice(marketAverage)} টাকা
+                        <td className="px-1 py-3 text-right font-bold text-slate-800 sm:px-4 sm:py-4">
+                          <span className="sm:hidden">
+                            {formatPrice(Math.round(marketAverage))} টাকা
+                          </span>
+
+                          <span className="hidden sm:inline">
+                            {formatDecimalPrice(marketAverage)} টাকা
+                          </span>
                         </td>
                       </tr>
                     );
@@ -268,7 +274,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         <div className="mt-7">
           <Link
             href={`/category/${product.category}`}
-            className="inline-flex items-center rounded-2xl bg-[#05893E] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-150 hover:bg-[#047A36] hover:shadow-md active:scale-95"
+            className="inline-flex items-center rounded-xl bg-[#05893E] px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-150 hover:bg-[#047A36] hover:shadow-md active:scale-95 sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-sm"
           >
             ← সব {product.categoryNameBn}
           </Link>

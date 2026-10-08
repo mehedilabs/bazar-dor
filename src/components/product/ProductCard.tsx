@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Product } from "@/types/product";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, toBanglaNumber } from "@/lib/utils";
 
 interface ProductCardProps {
   product: Product;
@@ -60,7 +60,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {/* Change */}
         <span className={`text-xs font-bold ${changeClass}`}>
-          {change > 0 ? "▲" : change < 0 ? "▼" : "—"} {Math.abs(change)}%
+          {change > 0 ? "▲" : change < 0 ? "▼" : "—"}{" "}
+          {toBanglaNumber(Math.abs(change))}%
         </span>
       </div>
     </Link>
