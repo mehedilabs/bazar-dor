@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GiShoppingCart } from "react-icons/gi";
+import Userinfo from "../Userinfo";
 
 const Header = () => {
   const date = new Intl.DateTimeFormat("bn-BD", {
@@ -25,21 +26,7 @@ const Header = () => {
         </Link>
 
         {/* Sign In / Sign Up */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/signin"
-            className="text-sm font-semibold text-slate-700 transition hover:text-green-700 sm:text-base"
-          >
-            সাইন ইন
-          </Link>
-
-          <Link
-            href="/signup"
-            className="rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700 sm:px-5 sm:text-base"
-          >
-            সাইন আপ
-          </Link>
-        </div>
+        <Userinfo />
       </div>
     </header>
   );
