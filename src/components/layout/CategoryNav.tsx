@@ -12,7 +12,7 @@ const CategoryNav = ({ categories }: CategoryNavProps) => {
   const pathname = usePathname();
 
   return (
-    <nav className="border-b border-slate-200 bg-white">
+    <nav className="border-b border-slate-200 bg-[#FAFCFA]">
       <div className="mx-auto flex max-w-6xl flex-wrap justify-center gap-x-0.5 gap-y-0.5 px-1 py-1 md:flex-nowrap md:justify-start md:gap-1 md:overflow-visible md:px-4 md:py-2">
         {categories.map((category) => {
           const isActive = pathname === `/category/${category.slug}`;

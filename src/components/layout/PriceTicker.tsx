@@ -20,7 +20,7 @@ const getUnitInBangla = (unit: string) => {
 
 const PriceTicker = ({ products }: PriceTickerProps) => {
   return (
-    <div className="overflow-hidden border-y border-slate-200 bg-white text-slate-700">
+    <div className="overflow-hidden border-y border-slate-200 bg-[#FAFCFA] text-slate-700">
       <MarqueeText
         direction="right"
         duration={10}

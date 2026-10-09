@@ -8,7 +8,7 @@ const Header = () => {
   }).format(new Date());
 
   return (
-    <header className="border-b border-slate-200 bg-white">
+    <header className="border-b border-slate-200 bg-[#FAFCFA]">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:py-4">
         {/* Logo + Title + Date */}
         <Link href="/" className="flex items-center gap-3">

@@ -34,8 +34,11 @@ export default async function RootLayout({
       className={`${NotoSerifBengali.className} h-full antialiased `}
     >
       <body>
-        <Header />
-        <CategoryNav categories={categories} />
+        <div className="sticky top-0 z-50  bg-[#FAFCFA]">
+          <Header />
+          <CategoryNav categories={categories} />
+        </div>
+
         <PriceTicker products={products} />
         {children}
 
