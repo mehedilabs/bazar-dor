@@ -6,6 +6,7 @@ import PriceTicker from "@/components/layout/PriceTicker";
 import { getCategories, getProducts } from "@/lib/api";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Suspense } from "react";
 
 import { Noto_Serif_Bengali } from "next/font/google";
 import Footer from "@/components/layout/Footer";
@@ -37,7 +38,9 @@ export default async function RootLayout({
       <body>
         <div className="sticky top-0 z-50  bg-[#FAFCFA]">
           <Header />
-          <CategoryNav categories={categories} />
+          <Suspense fallback={null}>
+            <CategoryNav categories={categories} />
+          </Suspense>
         </div>
 
         <PriceTicker products={products} />
