@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
     e.preventDefault();
@@ -26,6 +29,8 @@ const SignIn = () => {
     if (error) {
       if (error.code === "INVALID_EMAIL_OR_PASSWORD") {
         toast.error("ইমেইল অথবা পাসওয়ার্ড ভুল হয়েছে");
+      } else {
+        toast.error("লগইন করা যায়নি। আবার চেষ্টা করুন");
       }
 
       return;
@@ -33,7 +38,13 @@ const SignIn = () => {
 
     if (data) {
       toast.success("সফলভাবে লগইন হয়েছে");
+      router.push("/");
     }
+  };
+  const handleGoogleSignIn = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
@@ -95,6 +106,14 @@ const SignIn = () => {
             সাইন ইন
           </button>
         </form>
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="btn mt-4 w-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+        >
+          <FcGoogle className="text-xl" />
+          Google দিয়ে সাইন আপ করুন
+        </button>
 
         <p className="mt-5 text-center text-sm text-gray-600">
           অ্যাকাউন্ট নেই?{" "}

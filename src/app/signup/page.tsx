@@ -6,6 +6,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -45,6 +46,12 @@ const SignUp = () => {
     if (data) {
       redirect("/");
     }
+  };
+
+  const handleGoogleSignIn = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
   };
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 py-10">
@@ -143,6 +150,14 @@ const SignUp = () => {
             সাইন আপ
           </button>
         </form>
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="btn mt-4 w-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+        >
+          <FcGoogle className="text-xl" />
+          Google দিয়ে সাইন আপ করুন
+        </button>
 
         <p className="mt-5 text-center text-sm text-gray-600">
           ইতোমধ্যে অ্যাকাউন্ট আছে?{" "}
