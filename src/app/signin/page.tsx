@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+import { DiGithub } from "react-icons/di";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,6 +45,11 @@ const SignIn = () => {
   const handleGoogleSignIn = async () => {
     await authClient.signIn.social({
       provider: "google",
+    });
+  };
+  const handleGithubSignIn = async () => {
+    await authClient.signIn.social({
+      provider: "github",
     });
   };
 
@@ -113,6 +119,14 @@ const SignIn = () => {
         >
           <FcGoogle className="text-xl" />
           Google দিয়ে সাইন আপ করুন
+        </button>
+        <button
+          type="button"
+          onClick={handleGithubSignIn}
+          className="btn mt-4 w-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+        >
+          <DiGithub className="text-xl" />
+          Github দিয়ে সাইন আপ করুন
         </button>
 
         <p className="mt-5 text-center text-sm text-gray-600">

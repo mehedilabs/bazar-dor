@@ -11,6 +11,7 @@ const Userinfo = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const user = session?.user;
+  console.log("User image:", user?.image);
   const firstLetter =
     user?.name?.trim().charAt(0).toUpperCase() ||
     user?.email?.trim().charAt(0).toUpperCase() ||
@@ -45,14 +46,14 @@ const Userinfo = () => {
                 width={32}
                 height={32}
                 unoptimized
-                className="h-8 w-8 shrink-0 rounded-full border-[1] border-green-200 object-cover shadow-sm"
+                referrerPolicy="no-referrer"
+                className="h-8 w-8 shrink-0 rounded-full border-2 border-green-200 object-cover"
               />
             ) : (
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#05893E] text-sm font-bold text-white">
                 {firstLetter}
               </span>
             )}
-
             <span className="max-w-[100px] truncate text-xs font-semibold text-slate-700 sm:max-w-[160px] sm:text-sm">
               {user.name?.trim().split(/\s+/)[0]}
             </span>
