@@ -5,6 +5,7 @@ import CategoryNav from "@/components/layout/CategoryNav";
 import PriceTicker from "@/components/layout/PriceTicker";
 import { getCategories, getProducts } from "@/lib/api";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Noto_Serif_Bengali } from "next/font/google";
 import Footer from "@/components/layout/Footer";

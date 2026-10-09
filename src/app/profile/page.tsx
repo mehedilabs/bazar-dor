@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiLogOut, FiUser } from "react-icons/fi";
+import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 
@@ -23,12 +24,11 @@ const ProfilePage = () => {
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMessage("");
 
     const trimmedName = name.trim();
 
     if (!trimmedName) {
-      setMessage("আপনার নাম লিখুন।");
+      toast.error("আপনার নাম লিখুন।");
       return;
     }
 
@@ -40,12 +40,13 @@ const ProfilePage = () => {
       });
 
       if (result.error) {
-        setMessage("নাম আপডেট করা যায়নি। আবার চেষ্টা করুন।");
+        toast.error("নাম আপডেট করা যায়নি। আবার চেষ্টা করুন।");
       } else {
-        setMessage("আপনার নাম সফলভাবে আপডেট হয়েছে।");
+        toast.success("আপনার নাম সফলভাবে আপডেট হয়েছে।");
+        setName("");
       }
     } catch {
-      setMessage("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      toast.error("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
     } finally {
       setIsUpdating(false);
     }
