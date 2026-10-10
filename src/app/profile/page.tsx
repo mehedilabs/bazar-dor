@@ -6,6 +6,7 @@ import { FiLogOut, FiUser } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
+import ProfileLoadingSkeleton from "./ProfileLoadingSkeleton";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -56,30 +57,36 @@ const ProfilePage = () => {
     setIsSigningOut(true);
 
     try {
-      await authClient.signOut();
+      const { error } = await authClient.signOut();
+
+      if (error) {
+        toast.error("সাইন আউট করা যায়নি। আবার চেষ্টা করুন।");
+        return;
+      }
+
+      toast.success("সফলভাবে সাইন আউট হয়েছে।");
       router.replace("/signin");
       router.refresh();
     } catch {
-      setMessage("সাইন আউট করা যায়নি। আবার চেষ্টা করুন।");
+      toast.error("সাইন আউট করা যায়নি। আবার চেষ্টা করুন।");
+    } finally {
       setIsSigningOut(false);
     }
   };
 
   if (isPending) {
-    return (
-      <main className="mx-auto max-w-3xl px-4 py-10">
-        <p className="text-sm text-slate-500">প্রোফাইল লোড হচ্ছে...</p>
-      </main>
-    );
+    return <ProfileLoadingSkeleton />;
   }
 
   if (!user) {
     return (
       <main className="mx-auto max-w-3xl px-4 py-10">
         <h1 className="text-2xl font-bold text-slate-800">আমার প্রোফাইল</h1>
+
         <p className="mt-2 text-sm text-slate-500">
           প্রোফাইল দেখতে প্রথমে সাইন ইন করুন।
         </p>
+
         <button
           onClick={() => router.push("/signin")}
           className="mt-5 rounded-lg bg-green-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800"
@@ -97,15 +104,17 @@ const ProfilePage = () => {
         <h1 className="text-2xl font-bold tracking-tight text-slate-800 sm:text-3xl">
           আমার প্রোফাইল
         </h1>
+
         <p className="mt-2 text-sm text-slate-500 sm:text-base">
           আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।
         </p>
       </div>
 
       {/* User Information */}
-      <section className="mt-7 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="mt-7 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <div className="flex items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          {/* Profile Avatar and User Details */}
+          <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
             {/* Profile Avatar */}
             {user.image ? (
               <Image
@@ -124,22 +133,36 @@ const ProfilePage = () => {
             )}
 
             {/* Name and Email */}
-            <div className="min-w-0">
-              <h2 className="truncate text-lg font-bold text-slate-800 sm:text-xl">
+            <div className="min-w-0 flex-1">
+              <h2 className="truncate text-base font-bold text-slate-800 sm:text-xl">
                 {user.name || "ব্যবহারকারী"}
               </h2>
-              <p className="mt-1 break-all text-sm text-slate-500">
+
+              <p className="mt-1 truncate text-[11px] text-slate-500 sm:text-sm">
                 {user.email}
               </p>
             </div>
           </div>
 
-          {/* Sign Out Button */}
+          {/* Desktop and Tablet Sign Out Button */}
           <button
             type="button"
             onClick={handleSignOut}
             disabled={isSigningOut}
-            className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-red-100 bg-white px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60 sm:px-4"
+            className="hidden shrink-0 items-center gap-2 rounded-lg border border-red-100 bg-white px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60 sm:inline-flex sm:px-4"
+          >
+            <FiLogOut size={16} />
+            <span>{isSigningOut ? "সাইন আউট..." : "সাইন আউট"}</span>
+          </button>
+        </div>
+
+        {/* Mobile Sign Out Button */}
+        <div className="mt-3 flex justify-end sm:hidden">
+          <button
+            type="button"
+            onClick={handleSignOut}
+            disabled={isSigningOut}
+            className="inline-flex items-center gap-2 rounded-lg border border-red-100 bg-white px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
           >
             <FiLogOut size={16} />
             <span>{isSigningOut ? "সাইন আউট..." : "সাইন আউট"}</span>
@@ -151,6 +174,7 @@ const ProfilePage = () => {
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <div className="mb-5 flex items-center gap-2">
           <FiUser className="text-green-700" size={20} />
+
           <h2 className="text-lg font-bold text-slate-800 sm:text-xl">
             ব্যক্তিগত তথ্য
           </h2>

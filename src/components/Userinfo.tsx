@@ -5,21 +5,33 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FiChevronDown, FiUser, FiLogOut } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 const Userinfo = () => {
   const { data: session, isPending } = authClient.useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   const user = session?.user;
-  console.log("User image:", user?.image);
+
   const firstLetter =
     user?.name?.trim().charAt(0).toUpperCase() ||
     user?.email?.trim().charAt(0).toUpperCase() ||
     "U";
 
   const handleSignOut = async () => {
-    await authClient.signOut();
-    setIsOpen(false);
+    try {
+      const { error } = await authClient.signOut();
+
+      if (error) {
+        toast.error("সাইন আউট করা যায়নি। আবার চেষ্টা করুন।");
+        return;
+      }
+
+      setIsOpen(false);
+      toast.success("সফলভাবে সাইন আউট হয়েছে।");
+    } catch {
+      toast.error("সাইন আউট করা যায়নি। আবার চেষ্টা করুন।");
+    }
   };
 
   if (isPending) {
@@ -117,14 +129,14 @@ const Userinfo = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           <Link
             href="/signin"
-            className="inline-flex items-center justify-center rounded-lg border border-green-200 bg-white px-3 py-2 text-xs font-semibold text-green-800 shadow-sm transition-all duration-200 hover:border-green-600 hover:bg-green-50 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
+            className="inline-flex items-center justify-center rounded-lg border border-green-200 bg-white px-2 py-1.5 text-[11px] font-semibold text-green-800 shadow-sm transition-all duration-200 hover:border-green-600 hover:bg-green-50 active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
           >
             সাইন ইন
           </Link>
 
           <Link
             href="/signup"
-            className="inline-flex items-center justify-center rounded-lg bg-[#05893E] px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#047A36] hover:shadow-md active:scale-95 sm:px-5 sm:py-2.5 sm:text-sm"
+            className="inline-flex items-center justify-center rounded-lg bg-[#05893E] px-2.5 py-1.5 text-[11px] font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#047A36] hover:shadow-md active:scale-95 sm:px-5 sm:py-2.5 sm:text-sm"
           >
             সাইন আপ
           </Link>
